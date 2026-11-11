@@ -30,11 +30,11 @@ Punto de entrada Streamlit: `app.py` en la raíz.
 
 **Purpose**: Inicialización del proyecto y entorno reproducible con uv (Python 3.12).
 
-- [ ] T001 Crear `pyproject.toml` en la raíz con metadatos del proyecto, Python 3.12, dependencias runtime (streamlit, pandas, plotly) y de desarrollo (pytest, ruff, mypy), y configuración de herramientas
-- [ ] T002 Crear el entorno virtual con `uv venv --python 3.12` y generar `uv.lock` con `uv sync`
-- [ ] T003 [P] Configurar `ruff` (lint + format) y `mypy` (modo estricto sobre `src/`) en `pyproject.toml`
-- [ ] T004 [P] Crear la estructura de paquetes: `src/movies_eda/__init__.py`, `src/movies_eda/data/__init__.py`, `src/movies_eda/analysis/__init__.py`, `src/movies_eda/ui/__init__.py` y `tests/unit/__init__.py`
-- [ ] T005 [P] Crear `README.md` en la raíz con instrucciones de entorno y ejecución (basadas en quickstart.md)
+- [x] T001 Crear `pyproject.toml` en la raíz con metadatos del proyecto, Python 3.12, dependencias runtime (streamlit, pandas, plotly) y de desarrollo (pytest, ruff, mypy), y configuración de herramientas
+- [x] T002 Crear el entorno virtual con `uv venv --python 3.12` y generar `uv.lock` con `uv sync`
+- [x] T003 [P] Configurar `ruff` (lint + format) y `mypy` (modo estricto sobre `src/`) en `pyproject.toml`
+- [x] T004 [P] Crear la estructura de paquetes: `src/movies_eda/__init__.py`, `src/movies_eda/data/__init__.py`, `src/movies_eda/analysis/__init__.py`, `src/movies_eda/ui/__init__.py` y `tests/unit/__init__.py`
+- [x] T005 [P] Crear `README.md` en la raíz con instrucciones de entorno y ejecución (basadas en quickstart.md)
 
 **Checkpoint**: Entorno uv listo, dependencias instaladas, estructura creada.
 
@@ -47,9 +47,9 @@ las historias.
 
 **⚠️ CRITICAL**: Ninguna historia de usuario puede comenzar hasta completar esta fase.
 
-- [ ] T006 Implementar `src/movies_eda/logging_config.py`: configuración central de `logging` estándar, nivel por defecto INFO, formato con trazabilidad (timestamp, módulo, nivel, mensaje), con docstrings NumPy y tipado
-- [ ] T007 Implementar `src/movies_eda/config.py`: resolución de la ruta del CSV configurable (variable de entorno `MOVIES_CSV_PATH` con `movies.csv` de la raíz como valor por defecto) y constantes de defaults (Top N por defecto), tipado y docstrings NumPy
-- [ ] T008 [P] Crear `tests/unit/conftest.py` con fixtures de pytest: un `DataFrame` de muestra representativo (incluyendo ceros en budget/revenue, fechas inválidas, géneros múltiples y nulos) para las pruebas de la capa de lógica
+- [x] T006 Implementar `src/movies_eda/logging_config.py`: configuración central de `logging` estándar, nivel por defecto INFO, formato con trazabilidad (timestamp, módulo, nivel, mensaje), con docstrings NumPy y tipado
+- [x] T007 Implementar `src/movies_eda/config.py`: resolución de la ruta del CSV configurable (variable de entorno `MOVIES_CSV_PATH` con `movies.csv` de la raíz como valor por defecto) y constantes de defaults (Top N por defecto), tipado y docstrings NumPy
+- [x] T008 [P] Crear `tests/unit/conftest.py` con fixtures de pytest: un `DataFrame` de muestra representativo (incluyendo ceros en budget/revenue, fechas inválidas, géneros múltiples y nulos) para las pruebas de la capa de lógica
 
 **Checkpoint**: Configuración y logging disponibles; fixtures de prueba listas.
 
@@ -66,19 +66,19 @@ el panel de KPIs y los cuatro histogramas sin errores, con los ceros excluidos.
 
 ### Tests for User Story 1 (TDD - escribir y ver fallar primero) ⚠️
 
-- [ ] T009 [P] [US1] Escribir pruebas de carga en `tests/unit/test_loader.py`: carga correcta del CSV, validación de columnas esperadas y excepción de dominio ante archivo inexistente o columna faltante
-- [ ] T010 [P] [US1] Escribir pruebas de limpieza en `tests/unit/test_cleaning.py`: ceros de `budget`/`revenue` convertidos a `NaN`, `release_date` inválida -> `NaT`, derivación de `release_year`
-- [ ] T011 [P] [US1] Escribir pruebas de KPIs en `tests/unit/test_metrics.py`: `total_movies`, promedios de budget/revenue excluyendo faltantes, `avg_runtime`, `min_year`/`max_year`
-- [ ] T012 [P] [US1] Escribir pruebas de distribuciones en `tests/unit/test_distributions.py`: series de histograma que excluyen faltantes y manejan el caso sin datos
+- [x] T009 [P] [US1] Escribir pruebas de carga en `tests/unit/test_loader.py`: carga correcta del CSV, validación de columnas esperadas y excepción de dominio ante archivo inexistente o columna faltante
+- [x] T010 [P] [US1] Escribir pruebas de limpieza en `tests/unit/test_cleaning.py`: ceros de `budget`/`revenue` convertidos a `NaN`, `release_date` inválida -> `NaT`, derivación de `release_year`
+- [x] T011 [P] [US1] Escribir pruebas de KPIs en `tests/unit/test_metrics.py`: `total_movies`, promedios de budget/revenue excluyendo faltantes, `avg_runtime`, `min_year`/`max_year`
+- [x] T012 [P] [US1] Escribir pruebas de distribuciones en `tests/unit/test_distributions.py`: series de histograma que excluyen faltantes y manejan el caso sin datos
 
 ### Implementation for User Story 1
 
-- [ ] T013 [US1] Implementar `src/movies_eda/data/loader.py`: `load_movies(path)` con pandas, validación de columnas, excepción de dominio y logging INFO de inicio/fin (hace pasar T009)
-- [ ] T014 [US1] Implementar `src/movies_eda/data/cleaning.py`: `clean_movies(df)` (ceros->NaN, parseo de fechas, `release_year`) con logging y tipado (hace pasar T010)
-- [ ] T015 [P] [US1] Implementar `src/movies_eda/analysis/metrics.py`: `compute_summary_metrics(df) -> SummaryMetrics` (dataclass tipada) (hace pasar T011)
-- [ ] T016 [P] [US1] Implementar `src/movies_eda/analysis/distributions.py`: funciones que devuelven las series para los histogramas excluyendo faltantes (hace pasar T012)
-- [ ] T017 [US1] Implementar `src/movies_eda/ui/charts.py` (parte US1): funciones que construyen las figuras Plotly de histogramas a partir de las series de lógica
-- [ ] T018 [US1] Implementar en `app.py` la sección de KPIs y los cuatro histogramas, orquestando carga (con `st.cache_data`), limpieza y charts; manejo de errores con `st.error` y logging (FR-013)
+- [x] T013 [US1] Implementar `src/movies_eda/data/loader.py`: `load_movies(path)` con pandas, validación de columnas, excepción de dominio y logging INFO de inicio/fin (hace pasar T009)
+- [x] T014 [US1] Implementar `src/movies_eda/data/cleaning.py`: `clean_movies(df)` (ceros->NaN, parseo de fechas, `release_year`) con logging y tipado (hace pasar T010)
+- [x] T015 [P] [US1] Implementar `src/movies_eda/analysis/metrics.py`: `compute_summary_metrics(df) -> SummaryMetrics` (dataclass tipada) (hace pasar T011)
+- [x] T016 [P] [US1] Implementar `src/movies_eda/analysis/distributions.py`: funciones que devuelven las series para los histogramas excluyendo faltantes (hace pasar T012)
+- [x] T017 [US1] Implementar `src/movies_eda/ui/charts.py` (parte US1): funciones que construyen las figuras Plotly de histogramas a partir de las series de lógica
+- [x] T018 [US1] Implementar en `app.py` la sección de KPIs y los cuatro histogramas, orquestando carga (con `st.cache_data`), limpieza y charts; manejo de errores con `st.error` y logging (FR-013)
 
 **Checkpoint**: La página muestra KPIs + histogramas funcionando; US1 es un MVP demostrable.
 
@@ -95,16 +95,16 @@ año, y que los controles actualizan los gráficos correspondientes.
 
 ### Tests for User Story 2 (TDD - escribir y ver fallar primero) ⚠️
 
-- [ ] T019 [P] [US2] Escribir pruebas de parseo de géneros en `tests/unit/test_cleaning.py`: `parse_genres` separa la cadena en `list[str]` normalizada y maneja vacíos/nulos
-- [ ] T020 [P] [US2] Escribir pruebas categóricas en `tests/unit/test_categorical.py`: Top N géneros, Top N idiomas (con N mayor que categorías disponibles -> todas) y conteo por año excluyendo años `NaT`, con filtro de rango de años
+- [x] T019 [P] [US2] Escribir pruebas de parseo de géneros en `tests/unit/test_cleaning.py`: `parse_genres` separa la cadena en `list[str]` normalizada y maneja vacíos/nulos
+- [x] T020 [P] [US2] Escribir pruebas categóricas en `tests/unit/test_categorical.py`: Top N géneros, Top N idiomas (con N mayor que categorías disponibles -> todas) y conteo por año excluyendo años `NaT`, con filtro de rango de años
 
 ### Implementation for User Story 2
 
-- [ ] T021 [US2] Añadir `parse_genres` a `src/movies_eda/data/cleaning.py` (hace pasar T019)
-- [ ] T022 [US2] Implementar `src/movies_eda/analysis/categorical.py`: `top_genres(df, n)`, `top_languages(df, n)` y `movies_per_year(df, year_range)` con tipado y logging (hace pasar T020)
-- [ ] T023 [US2] Implementar `src/movies_eda/ui/controls.py`: control de Top N (slider) y control de rango de años (slider), con defaults desde `config.py`
-- [ ] T024 [US2] Añadir a `src/movies_eda/ui/charts.py` las figuras Plotly de barras (Top N géneros, Top N idiomas) y de películas por año
-- [ ] T025 [US2] Integrar en `app.py` los controles y los tres gráficos de US2, enlazando Top N y rango de años a los gráficos dependientes (FR-011, FR-012)
+- [x] T021 [US2] Añadir `parse_genres` a `src/movies_eda/data/cleaning.py` (hace pasar T019)
+- [x] T022 [US2] Implementar `src/movies_eda/analysis/categorical.py`: `top_genres(df, n)`, `top_languages(df, n)` y `movies_per_year(df, year_range)` con tipado y logging (hace pasar T020)
+- [x] T023 [US2] Implementar `src/movies_eda/ui/controls.py`: control de Top N (slider) y control de rango de años (slider), con defaults desde `config.py`
+- [x] T024 [US2] Añadir a `src/movies_eda/ui/charts.py` las figuras Plotly de barras (Top N géneros, Top N idiomas) y de películas por año
+- [x] T025 [US2] Integrar en `app.py` los controles y los tres gráficos de US2, enlazando Top N y rango de años a los gráficos dependientes (FR-011, FR-012)
 
 **Checkpoint**: US1 y US2 funcionan de forma independiente; controles básicos operativos.
 
@@ -120,13 +120,13 @@ revenue) y la tabla/gráfico con el conteo de nulos y ceros por columna.
 
 ### Tests for User Story 3 (TDD - escribir y ver fallar primero) ⚠️
 
-- [ ] T026 [P] [US3] Escribir pruebas de calidad de datos en `tests/unit/test_quality.py`: `compute_data_quality(df)` devuelve conteo de nulos y de ceros por columna (verificando budget/revenue)
+- [x] T026 [P] [US3] Escribir pruebas de calidad de datos en `tests/unit/test_quality.py`: `compute_data_quality(df)` devuelve conteo de nulos y de ceros por columna (verificando budget/revenue)
 
 ### Implementation for User Story 3
 
-- [ ] T027 [US3] Implementar `src/movies_eda/analysis/quality.py`: `compute_data_quality(df) -> DataFrame` (columna, null_count, zero_count) con tipado y logging (hace pasar T026)
-- [ ] T028 [US3] Añadir a `src/movies_eda/ui/charts.py` la figura de dispersión (budget vs. revenue / popularity vs. vote_count) usando datos sin faltantes
-- [ ] T029 [US3] Integrar en `app.py` la sección de dispersión y el panel de calidad de datos (FR-009, FR-010)
+- [x] T027 [US3] Implementar `src/movies_eda/analysis/quality.py`: `compute_data_quality(df) -> DataFrame` (columna, null_count, zero_count) con tipado y logging (hace pasar T026)
+- [x] T028 [US3] Añadir a `src/movies_eda/ui/charts.py` la figura de dispersión (budget vs. revenue / popularity vs. vote_count) usando datos sin faltantes
+- [x] T029 [US3] Integrar en `app.py` la sección de dispersión y el panel de calidad de datos (FR-009, FR-010)
 
 **Checkpoint**: Las tres historias de usuario quedan independientemente funcionales.
 
